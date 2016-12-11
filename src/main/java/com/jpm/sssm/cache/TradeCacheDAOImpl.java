@@ -37,8 +37,8 @@ public class TradeCacheDAOImpl implements TradeCacheDAO<Trade> {
         ConcurrentMap<Long, Trade> tradesForOneStockMap = tradesForAllStocksMap.get(trade.getStocksymbol());
         if (tradesForOneStockMap == null) {
             ConcurrentMap<Long, Trade> tradeMap = new ConcurrentHashMap<>();
-            tradeMap.putIfAbsent(trade.getTradeId(), trade);
-            tradesForAllStocksMap.putIfAbsent(trade.getStocksymbol(), tradeMap);
+            tradeMap.put(trade.getTradeId(), trade);
+            tradesForAllStocksMap.put(trade.getStocksymbol(), tradeMap);
         } else {
             tradesForOneStockMap.putIfAbsent(trade.getTradeId(), trade);
         }
