@@ -31,7 +31,7 @@ public class TradeCacheDAOImpl implements TradeCacheDAO<Trade> {
 
     @Override
     public synchronized void save(Trade trade) {
-        // Synchronized to prevent multiple threads to create multiple stock map for the trades belong to the same stock simultaneously
+        // Synchronized to prevent multiple threads to create multiple stock map for trades belong to the same stock simultaneously
         LOG.debug(String.format("Saving trade in cache : %s",
                 trade));
         ConcurrentMap<Long, Trade> tradesForOneStockMap = tradesForAllStocksMap.get(trade.getStocksymbol());
