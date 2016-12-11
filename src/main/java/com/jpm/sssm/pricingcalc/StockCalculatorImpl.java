@@ -34,7 +34,7 @@ public class StockCalculatorImpl implements StockCalculator {
     @Override
     public double calculateDividendYield(Trade trade) throws InvalidStockException, InvalidTradeException {
         StockData stock = stockCacheDAO.get(trade.getStocksymbol());
-        LOG.info(String.format("Calculating dividend yield of stock %s",
+        LOG.info(String.format("Calculating dividend yield for stock %s",
                 stock));
         if (stock.getStockType() == StockType.COMMON) { // Calculate dividend when stock type is Common
             return stock.getLastDividend()
@@ -50,7 +50,7 @@ public class StockCalculatorImpl implements StockCalculator {
     @Override
     public double calculatePriceEarningsRatio(Trade trade) throws InvalidStockException, InvalidTradeException {
         StockData stock = stockCacheDAO.get(trade.getStocksymbol());
-        LOG.info(String.format("Calculating price earnings ratio of stock %s",
+        LOG.info(String.format("Calculating price earnings ratio for stock %s",
                 stock));
         int dividened = stock.getLastDividend()
                 .orElseThrow(InvalidStockException::new);
@@ -71,10 +71,10 @@ public class StockCalculatorImpl implements StockCalculator {
 
     @Override
     public double calculateVolumeWeightedStock(StockData stock, int durationInMins) {
-        LOG.info(String.format("Calculating volume weighted of stock  %s for duration %s",
+        LOG.info(String.format("Calculating volume weighted for stock %s for duration %s",
                 stock, durationInMins));
         List<Trade> trades = tradeCacheDAO.getAllTrades(stock.getStockSymbol(), LocalDateTime.now(), durationInMins);
-        trades.forEach(trade -> LOG.info(String.format("Trades participating in the calculation of volume weighted of %s : %s",
+        trades.forEach(trade -> LOG.info(String.format("Trades participated in the calculation of volume weighted for stock %s : %s",
                 stock.getStockSymbol(), trade)));
         double totalStockPrice = trades.stream().map(trade -> {
             double stockPrice = 0.0; //Invalid trades will be ignored if exception occurs
@@ -99,7 +99,7 @@ public class StockCalculatorImpl implements StockCalculator {
     @Override
     public double calculateGBCEAllShareIndex() {
         List<Trade> trades = tradeCacheDAO.getAllTrades();
-        trades.forEach(trade -> LOG.info(String.format("Calculating GBC All Share Index of : %s",
+        trades.forEach(trade -> LOG.info(String.format("Calculating GBC All Share Index for : %s",
                 trade)));
         double multipliedPrices = trades.stream()
                 .map(trade -> {
